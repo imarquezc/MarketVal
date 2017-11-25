@@ -1,13 +1,13 @@
 class ImagesController < ApplicationController
 
     skip_before_action :verify_authenticity_token  
-
+    
     def create
-        puts params[:image]
         image = Image.new(image: params[:image])
+        classification,tags = image.get_tags
         if image.save
             respond_to do |format|
-                msg = { :tags => ["tag1", "tag2"]}
+                msg = { :tags =>tags , category: classification, image_id: image.id}
                 format.json  { render :json => msg } # don't do msg.to_json
               end
         else
