@@ -2,8 +2,9 @@ class ProductsController < ApplicationController
   skip_before_action :verify_authenticity_token
   def index
     products = Product.all
+    msg = products.to_json
     respond_to do |format|
-      format.json{render json: products.to_json}
+      format.json{render json: msg}
     end
   end
   def create
@@ -22,8 +23,9 @@ class ProductsController < ApplicationController
   
   def show #products/:id
     product = Product.find(params[:id])
+    msg = product.to_json
     respond_to do |format|
-        format.json{render json: product.to_json }
+        format.json{render json: msg}
     end
   end
 
